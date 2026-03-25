@@ -1,0 +1,27 @@
+Mathlib/Combinatorics/SimpleGraph/Matching.lean
+  0f0f9b0f23a44b70 567-568,572-573
+Mathlib/Data/Nat/Prime/Basic.lean
+  0f0f9b0f23a44b70 183-184
+Mathlib/Data/Multiset/ZeroCons.lean
+  0f0f9b0f23a44b70 549-550
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.18",
+  "base_commit_sha": "7b371344a3787556977ff8a9083bb851063ca90b",
+  "prompts": {
+    "0f0f9b0f23a44b70": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c2e5f234-b100-4d90-8b3b-bcfb19d51ead",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Xuanji Li <xuanji@gmail.com>",
+      "messages": [],
+      "total_additions": 9,
+      "total_deletions": 14,
+      "accepted_lines": 8,
+      "overriden_lines": 0
+    }
+  }
+}
