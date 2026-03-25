@@ -1,0 +1,59 @@
+Mathlib/AlgebraicTopology/DoldKan/Homotopies.lean
+  feb3b3b51b884409 146
+Mathlib/LinearAlgebra/BilinearMap.lean
+  feb3b3b51b884409 358-359
+Mathlib/NumberTheory/Multiplicity.lean
+  feb3b3b51b884409 327
+Mathlib/CategoryTheory/Limits/Shapes/Products.lean
+  feb3b3b51b884409 780,815
+Mathlib/Geometry/Euclidean/MongePoint.lean
+  feb3b3b51b884409 92,279
+Mathlib/Computability/RegularExpressions.lean
+  feb3b3b51b884409 220
+Mathlib/Computability/TuringMachine/PostTuringMachine.lean
+  feb3b3b51b884409 829
+Mathlib/AlgebraicTopology/ExtraDegeneracy.lean
+  feb3b3b51b884409 178
+Mathlib/GroupTheory/PushoutI.lean
+  feb3b3b51b884409 410
+Mathlib/GroupTheory/Perm/Support.lean
+  feb3b3b51b884409 140
+Mathlib/Data/Seq/Basic.lean
+  feb3b3b51b884409 187
+Mathlib/Data/Multiset/ZeroCons.lean
+  feb3b3b51b884409 520
+Mathlib/Combinatorics/SimpleGraph/Connectivity/Connected.lean
+  feb3b3b51b884409 650
+Mathlib/CategoryTheory/Limits/Shapes/ZeroMorphisms.lean
+  feb3b3b51b884409 208,212
+Mathlib/AlgebraicTopology/DoldKan/FunctorGamma.lean
+  feb3b3b51b884409 183
+Mathlib/Data/Vector/Basic.lean
+  feb3b3b51b884409 241
+Mathlib/LinearAlgebra/BilinearForm/Hom.lean
+  feb3b3b51b884409 187-188
+Mathlib/Topology/Sheaves/Stalks.lean
+  feb3b3b51b884409 603-604
+Mathlib/Algebra/Group/Invertible/Basic.lean
+  feb3b3b51b884409 148
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.1.19",
+  "base_commit_sha": "bfe07831c730424372c05269e54b0507af398b2e",
+  "prompts": {
+    "feb3b3b51b884409": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "750f961c-1ca1-49c9-b773-5827be170889",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Xuanji Li <xuanji@gmail.com>",
+      "messages": [],
+      "total_additions": 25,
+      "total_deletions": 48,
+      "accepted_lines": 25,
+      "overriden_lines": 0
+    }
+  }
+}
