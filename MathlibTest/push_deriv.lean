@@ -27,15 +27,16 @@ we want lemmas of the form `deriv (compound_expr) x = ... (deriv simpler_expr x)
 8. `deriv_sum` : `deriv (∑ i ∈ u, A i) x = ∑ i ∈ u, deriv (A i) x`
    -- requires `∀ i ∈ u, DifferentiableAt 𝕜 (A i) x`
 
-**Lemmas that do NOT fit the push pattern at all:**
+**Non-linear rules that ALSO work with push:**
+The push mechanism doesn't require the RHS to have a distributional form.
+Any lemma with `deriv` at the head of the LHS works. These include:
 9. Product rule: `deriv (f * g) x = deriv f x * g x + f x * deriv g x`
-   -- The RHS has a fundamentally different structure (sum of products)
-10. Chain rule: `deriv (g ∘ f) x = deriv f x • deriv g (f x)`
-    -- The RHS involves evaluating `deriv g` at `f x`, not at `x`
+10. Chain rule: `deriv (g ∘ f) x = deriv g (f x) * deriv f x`
 11. Quotient rule: `deriv (f / g) x = (deriv f x * g x - f x * deriv g x) / g x ^ 2`
-    -- Complex RHS structure
-12. Power rule: `deriv (fun x => f x ^ n) x = ...`
-    -- Uses chain rule internally
+12. Power rule: `deriv (f ^ n) x = n * f x ^ (n-1) * deriv f x`
+13. Inverse rule: `deriv (f⁻¹) x = -deriv f x / f x ^ 2`
+Push recursively applies these, so e.g. `push deriv` on `deriv ((f+g)*f)` first
+applies the product rule, then applies `deriv_add` to `deriv (f+g)` in the result.
 
 ### Does `push` handle side conditions?
 
@@ -51,15 +52,10 @@ conditions in `log_mul`. So we CAN tag `deriv_add` etc. with `@[push]` and use
 tagged `@[simp]`. So `simp [deriv_add, deriv_sub, ...]` already works for these. The `push`
 approach would be slightly more targeted (only applying deriv-related rewrites).
 
-**The real limitation**: For practical derivative computation, you almost always need the
-chain rule and product rule, which do NOT fit the push pattern. So `push deriv` would only
-handle the "linear" part of differentiation. A dedicated `deriv` tactic (or `simp` with
-the right lemma set) would be more practical.
-
-**Conclusion**: Tagging the unconditional lemmas (`deriv.neg`, `deriv_const_mul_field`)
-with `@[push]` is harmless and works. Tagging the conditional ones (`deriv_add`, etc.)
-also works when combined with `disch := fun_prop`. But this covers only the linear
-fragment of differentiation, making it of limited practical value.
+**Conclusion**: `push (disch := fun_prop) deriv` can fully compute symbolic derivatives.
+It handles both linear rules (addition, subtraction, scalar multiplication) AND non-linear
+rules (product rule, chain rule, power rule, quotient rule, inverse rule). The push
+mechanism recursively applies rules, so compound expressions are fully expanded.
 
 ### fderiv considerations
 
@@ -75,6 +71,8 @@ module
 public import Mathlib.Analysis.Calculus.Deriv.Add
 public import Mathlib.Analysis.Calculus.Deriv.Mul
 public import Mathlib.Analysis.Calculus.Deriv.Pow
+public import Mathlib.Analysis.Calculus.Deriv.Comp
+public import Mathlib.Analysis.Calculus.Deriv.Inv
 import Mathlib.Tactic.Push
 import Mathlib.Tactic.FunProp
 
@@ -169,16 +167,81 @@ example (c : 𝕜) (hyp : deriv (fun y => c * (-f) y) x = 0) : c * -deriv f x = 
 
 end combined
 
-/-! ## Demonstration: what does NOT work with push
+/-! ## Non-linear rules: product rule, chain rule, etc.
 
-The product rule does NOT fit the push pattern because:
-  deriv (f * g) x = deriv f x * g x + f x * deriv g x
-The RHS is not of the form `op (deriv f x) (deriv g x)`.
-
-The chain rule does NOT fit the push pattern because:
-  deriv (g ∘ f) x = deriv f x • deriv g (f x)
-The RHS involves `deriv g` evaluated at `f x`, not at `x`.
-
-These are fundamental limitations: `push` can only handle the LINEAR
-fragment of differentiation (where deriv distributes cleanly).
+These DO work with push, even though the RHS doesn't have the "clean" distributional form.
+The push mechanism just rewrites any lemma with the target constant at the head of the LHS.
 -/
+
+attribute [push] deriv_mul
+attribute [push] deriv_comp
+attribute [push] deriv_inv''
+attribute [push] deriv_div
+attribute [push] deriv_pow
+
+section product_rule
+
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+variable {f g : 𝕜 → 𝕜} {x : 𝕜}
+
+-- Product rule: deriv (f * g) = f' * g + f * g'
+example (hf : DifferentiableAt 𝕜 f x) (hg : DifferentiableAt 𝕜 g x)
+    (h : deriv (f * g) x = 0) : deriv f x * g x + f x * deriv g x = 0 := by
+  push (disch := fun_prop) deriv at h
+  exact h
+
+end product_rule
+
+section chain_rule
+
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+variable {f g : 𝕜 → 𝕜} {x : 𝕜}
+
+-- Chain rule: deriv (g ∘ f) = g'(f(x)) * f'(x)
+example (hg : DifferentiableAt 𝕜 g (f x)) (hf : DifferentiableAt 𝕜 f x)
+    (h : deriv (g ∘ f) x = 0) : deriv g (f x) * deriv f x = 0 := by
+  push (disch := fun_prop) deriv at h
+  exact h
+
+end chain_rule
+
+section power_rule
+
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+variable {f : 𝕜 → 𝕜} {x : 𝕜}
+
+-- Power rule: deriv (f ^ n) = n * f^(n-1) * f'
+example (hf : DifferentiableAt 𝕜 f x) (n : ℕ)
+    (h : deriv (f ^ n) x = 0) : ↑n * f x ^ (n - 1) * deriv f x = 0 := by
+  push (disch := fun_prop) deriv at h
+  exact h
+
+end power_rule
+
+section inverse_rule
+
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+variable {f : 𝕜 → 𝕜} {x : 𝕜}
+
+-- Inverse rule: deriv (f⁻¹) = -f' / f²
+example (hf : DifferentiableAt 𝕜 f x) (hfx : f x ≠ 0)
+    (h : deriv (f⁻¹) x = 0) : -deriv f x / f x ^ 2 = 0 := by
+  push (disch := first | fun_prop | assumption) deriv at h
+  exact h
+
+end inverse_rule
+
+section compound
+
+variable {𝕜 : Type*} [NontriviallyNormedField 𝕜]
+variable {f g : 𝕜 → 𝕜} {x : 𝕜}
+
+-- Compound: push deriv through (f + g) * f, applying both addition and product rules
+-- push applies deriv_mul, then recursively applies deriv_add inside the result
+example (hf : DifferentiableAt 𝕜 f x) (hg : DifferentiableAt 𝕜 g x)
+    (h : deriv ((f + g) * f) x = 0) :
+    (deriv f x + deriv g x) * f x + (f + g) x * deriv f x = 0 := by
+  push (disch := fun_prop) deriv at h
+  exact h
+
+end compound
