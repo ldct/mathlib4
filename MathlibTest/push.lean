@@ -4,6 +4,7 @@ import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Insert
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.LinearAlgebra.Matrix.Trace
 
 private axiom test_sorry : ∀ {α}, α
 
@@ -148,3 +149,30 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section trace
+
+variable (A B : Matrix (Fin 2) (Fin 2) ℝ) (r : ℝ)
+
+example : Matrix.trace (A + B) = Matrix.trace A + Matrix.trace B := by
+  push Matrix.trace
+  rfl
+
+example : Matrix.trace (-A) = -Matrix.trace A := by
+  push Matrix.trace
+  rfl
+
+example : Matrix.trace (A - B) = Matrix.trace A - Matrix.trace B := by
+  push Matrix.trace
+  rfl
+
+example : Matrix.trace (r • A) = r • Matrix.trace A := by
+  push Matrix.trace
+  rfl
+
+example (s : Finset (Fin 2)) (f : Fin 2 → Matrix (Fin 2) (Fin 2) ℝ) :
+    Matrix.trace (∑ i ∈ s, f i) = ∑ i ∈ s, Matrix.trace (f i) := by
+  push Matrix.trace
+  rfl
+
+end trace
