@@ -148,3 +148,59 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section norm
+
+example (a b : ℝ) : ‖a * b‖ = ‖a‖ * ‖b‖ := by
+  push norm
+  rfl
+
+example (a b : ℝ) : ‖a / b‖ = ‖a‖ / ‖b‖ := by
+  push norm
+  rfl
+
+example (a : ℝ) : ‖a⁻¹‖ = ‖a‖⁻¹ := by
+  push norm
+  rfl
+
+example (a : ℝ) (n : ℕ) : ‖a ^ n‖ = ‖a‖ ^ n := by
+  push norm
+  rfl
+
+example (a : ℝ) (n : ℤ) : ‖a ^ n‖ = ‖a‖ ^ n := by
+  push norm
+  rfl
+
+example (a : ℝ) : ‖-a‖ = ‖a‖ := by
+  push norm
+  rfl
+
+example (r a : ℝ) : ‖r • a‖ = ‖r‖ * ‖a‖ := by
+  push norm
+  rfl
+
+example (a b : ℝ) : ‖a * b‖₊ = ‖a‖₊ * ‖b‖₊ := by
+  push nnnorm
+  rfl
+
+example (a b : ℝ) : ‖a / b‖₊ = ‖a‖₊ / ‖b‖₊ := by
+  push nnnorm
+  rfl
+
+example (a : ℝ) : ‖a⁻¹‖₊ = ‖a‖₊⁻¹ := by
+  push nnnorm
+  rfl
+
+example (a : ℝ) (n : ℕ) : ‖a ^ n‖₊ = ‖a‖₊ ^ n := by
+  push nnnorm
+  rfl
+
+example (a : ℝ) (n : ℤ) : ‖a ^ n‖₊ = ‖a‖₊ ^ n := by
+  push nnnorm
+  rfl
+
+example (a : ℝ) : ‖-a‖₊ = ‖a‖₊ := by
+  push nnnorm
+  rfl
+
+end norm

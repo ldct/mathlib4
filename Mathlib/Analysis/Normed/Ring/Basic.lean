@@ -697,7 +697,7 @@ class NormMulClass (α : Type*) [Norm α] [Mul α] : Prop where
   /-- The norm is multiplicative. -/
   protected norm_mul : ∀ (a b : α), ‖a * b‖ = ‖a‖ * ‖b‖
 
-@[simp] lemma norm_mul [Norm α] [Mul α] [NormMulClass α] (a b : α) :
+@[simp, push] lemma norm_mul [Norm α] [Mul α] [NormMulClass α] (a b : α) :
     ‖a * b‖ = ‖a‖ * ‖b‖ :=
   NormMulClass.norm_mul a b
 
@@ -705,7 +705,7 @@ section SeminormedAddCommGroup
 
 variable [SeminormedAddCommGroup α] [Mul α] [NormMulClass α] (a b : α)
 
-@[simp] lemma nnnorm_mul : ‖a * b‖₊ = ‖a‖₊ * ‖b‖₊ := NNReal.eq <| norm_mul a b
+@[simp, push] lemma nnnorm_mul : ‖a * b‖₊ = ‖a‖₊ * ‖b‖₊ := NNReal.eq <| norm_mul a b
 
 @[simp] lemma enorm_mul : ‖a * b‖ₑ = ‖a‖ₑ * ‖b‖ₑ := by simp [enorm]
 
@@ -731,11 +731,11 @@ def nnnormHom : α →*₀ ℝ≥0 where
   map_one' := nnnorm_one
   map_mul' := nnnorm_mul
 
-@[simp]
+@[simp, push]
 theorem norm_pow (a : α) : ∀ n : ℕ, ‖a ^ n‖ = ‖a‖ ^ n :=
   (normHom.toMonoidHom : α →* ℝ).map_pow a
 
-@[simp]
+@[simp, push]
 theorem nnnorm_pow (a : α) (n : ℕ) : ‖a ^ n‖₊ = ‖a‖₊ ^ n :=
   (nnnormHom.toMonoidHom : α →* ℝ≥0).map_pow a n
 
@@ -753,11 +753,11 @@ section SeminormedCommRing
 
 variable [SeminormedCommRing α] [NormMulClass α] [NormOneClass α]
 
-@[simp]
+@[simp, push]
 theorem norm_prod (s : Finset β) (f : β → α) : ‖∏ b ∈ s, f b‖ = ∏ b ∈ s, ‖f b‖ :=
   map_prod normHom.toMonoidHom f s
 
-@[simp]
+@[simp, push]
 theorem nnnorm_prod (s : Finset β) (f : β → α) : ‖∏ b ∈ s, f b‖₊ = ∏ b ∈ s, ‖f b‖₊ :=
   map_prod nnnormHom.toMonoidHom f s
 
