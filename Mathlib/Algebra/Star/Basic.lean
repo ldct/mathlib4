@@ -183,22 +183,22 @@ lemma Pi.star_mulSingle {ι : Type*} {R : ι → Type*} [DecidableEq ι] [∀ i,
     [∀ i, StarMul (R i)] (i : ι) (r : R i) : star (mulSingle i r) = mulSingle i (star r) := by
   ext; exact apply_mulSingle (fun _ ↦ star) (fun _ ↦ star_one _) ..
 
-@[simp]
+@[simp, push]
 theorem star_pow [Monoid R] [StarMul R] (x : R) (n : ℕ) : star (x ^ n) = star x ^ n :=
   op_injective <|
     ((starMulEquiv : R ≃* Rᵐᵒᵖ).toMonoidHom.map_pow x n).trans (op_pow (star x) n).symm
 
-@[simp]
+@[simp, push]
 theorem star_inv [Group R] [StarMul R] (x : R) : star x⁻¹ = (star x)⁻¹ :=
   op_injective <| ((starMulEquiv : R ≃* Rᵐᵒᵖ).toMonoidHom.map_inv x).trans (op_inv (star x)).symm
 
-@[simp]
+@[simp, push]
 theorem star_zpow [Group R] [StarMul R] (x : R) (z : ℤ) : star (x ^ z) = star x ^ z :=
   op_injective <|
     ((starMulEquiv : R ≃* Rᵐᵒᵖ).toMonoidHom.map_zpow x z).trans (op_zpow (star x) z).symm
 
 /-- When multiplication is commutative, `star` preserves division. -/
-@[simp]
+@[simp, push]
 theorem star_div [CommGroup R] [StarMul R] (x y : R) : star (x / y) = star x / star y :=
   map_div (starMulAut : R ≃* R) _ _
 
@@ -255,11 +255,11 @@ theorem star_eq_zero [AddMonoid R] [StarAddMonoid R] {x : R} : star x = 0 ↔ x 
 theorem star_ne_zero [AddMonoid R] [StarAddMonoid R] {x : R} : star x ≠ 0 ↔ x ≠ 0 := by
   simp only [ne_eq, star_eq_zero]
 
-@[simp]
+@[simp, push]
 theorem star_neg [AddGroup R] [StarAddMonoid R] (r : R) : star (-r) = -star r :=
   (starAddEquiv : R ≃+ R).map_neg _
 
-@[simp]
+@[simp, push]
 theorem star_sub [AddGroup R] [StarAddMonoid R] (r s : R) : star (r - s) = star r - star s :=
   (starAddEquiv : R ≃+ R).map_sub _ _
 
