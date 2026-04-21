@@ -4,6 +4,7 @@ import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Insert
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Data.Real.Sign
 
 private axiom test_sorry : ∀ {α}, α
 
@@ -148,3 +149,25 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section sign
+
+variable (x y : ℝ) (n : ℕ)
+
+/-- info: SignType.sign x * SignType.sign y -/
+#guard_msgs in
+#push DFunLike.coe => SignType.sign (x * y)
+
+/-- info: SignType.sign x ^ n -/
+#guard_msgs in
+#push DFunLike.coe => SignType.sign (x ^ n)
+
+/-- info: -x.sign -/
+#guard_msgs in
+#push Real.sign => Real.sign (-x)
+
+/-- info: x.sign -/
+#guard_msgs in
+#push Real.sign => Real.sign x⁻¹
+
+end sign
