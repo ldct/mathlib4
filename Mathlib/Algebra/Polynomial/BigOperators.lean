@@ -363,6 +363,7 @@ the sum of the degrees.
 See `Polynomial.natDegree_prod'` (with a `'`) for a version for commutative semirings,
 where additionally, the product of the leading coefficients must be nonzero.
 -/
+@[push]
 theorem natDegree_prod (h : ∀ i ∈ s, f i ≠ 0) :
     (∏ i ∈ s, f i).natDegree = ∑ i ∈ s, (f i).natDegree := by
   nontriviality R
@@ -387,6 +388,7 @@ theorem degree_multiset_prod [Nontrivial R] : t.prod.degree = (t.map fun f => de
 /-- The degree of a product of polynomials is equal to
 the sum of the degrees, where the degree of the zero polynomial is ⊥.
 -/
+@[push]
 theorem degree_prod [Nontrivial R] : (∏ i ∈ s, f i).degree = ∑ i ∈ s, (f i).degree :=
   map_prod (@degreeMonoidHom R _ _ _) _ _
 
@@ -407,6 +409,7 @@ the product of the leading coefficients.
 See `Polynomial.leadingCoeff_prod'` (with a `'`) for a version for commutative semirings,
 where additionally, the product of the leading coefficients must be nonzero.
 -/
+@[push]
 theorem leadingCoeff_prod : (∏ i ∈ s, f i).leadingCoeff = ∏ i ∈ s, (f i).leadingCoeff := by
   simpa using leadingCoeff_multiset_prod (s.1.map f)
 

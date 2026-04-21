@@ -310,6 +310,7 @@ theorem coeff_mul_degree_add_degree (p q : R[X]) :
         apply H
         rw [mem_antidiagonal]
 
+@[push]
 theorem degree_mul' (h : leadingCoeff p * leadingCoeff q ≠ 0) :
     degree (p * q) = degree p + degree q :=
   have hp : p ≠ 0 := by refine mt ?_ h; exact fun hp => by rw [hp, leadingCoeff_zero, zero_mul]
@@ -325,6 +326,7 @@ theorem Monic.degree_mul (hq : Monic q) : degree (p * q) = degree p + degree q :
   if hp : p = 0 then by simp [hp]
   else degree_mul' <| by rwa [hq.leadingCoeff, mul_one, Ne, leadingCoeff_eq_zero]
 
+@[push]
 theorem natDegree_mul' (h : leadingCoeff p * leadingCoeff q ≠ 0) :
     natDegree (p * q) = natDegree p + natDegree q :=
   have hp : p ≠ 0 := mt leadingCoeff_eq_zero.2 fun h₁ => h <| by rw [h₁, zero_mul]
@@ -332,6 +334,7 @@ theorem natDegree_mul' (h : leadingCoeff p * leadingCoeff q ≠ 0) :
   natDegree_eq_of_degree_eq_some <| by
     rw [degree_mul' h, Nat.cast_add, degree_eq_natDegree hp, degree_eq_natDegree hq]
 
+@[push]
 theorem leadingCoeff_mul' (h : leadingCoeff p * leadingCoeff q ≠ 0) :
     leadingCoeff (p * q) = leadingCoeff p * leadingCoeff q := by
   simp [← coeff_natDegree, natDegree_mul' h, coeff_mul_degree_add_degree]
@@ -339,12 +342,14 @@ theorem leadingCoeff_mul' (h : leadingCoeff p * leadingCoeff q ≠ 0) :
 lemma Monic.leadingCoeff_C_mul (hp : p.Monic) (r : R) : (C r * p).leadingCoeff = r := by
   by_cases hr : r = 0 <;> simp_all [leadingCoeff_mul']
 
+@[push]
 theorem leadingCoeff_pow' : leadingCoeff p ^ n ≠ 0 → leadingCoeff (p ^ n) = leadingCoeff p ^ n :=
   Nat.recOn n (by simp) fun n ih h => by
     have h₁ : leadingCoeff p ^ n ≠ 0 := fun h₁ => h <| by rw [pow_succ, h₁, zero_mul]
     have h₂ : leadingCoeff p * leadingCoeff (p ^ n) ≠ 0 := by rwa [pow_succ', ← ih h₁] at h
     rw [pow_succ', pow_succ', leadingCoeff_mul' h₂, ih h₁]
 
+@[push]
 theorem degree_pow' : ∀ {n : ℕ}, leadingCoeff p ^ n ≠ 0 → degree (p ^ n) = n • degree p
   | 0 => fun h => by rw [pow_zero, ← C_1] at *; rw [degree_C h, zero_nsmul]
   | n + 1 => fun h => by
@@ -353,6 +358,7 @@ theorem degree_pow' : ∀ {n : ℕ}, leadingCoeff p ^ n ≠ 0 → degree (p ^ n)
       rwa [pow_succ, ← leadingCoeff_pow' h₁] at h
     rw [pow_succ, degree_mul' h₂, succ_nsmul, degree_pow' h₁]
 
+@[push]
 theorem natDegree_pow' {n : ℕ} (h : leadingCoeff p ^ n ≠ 0) : natDegree (p ^ n) = n * natDegree p :=
   letI := Classical.decEq R
   if hp0 : p = 0 then
@@ -673,7 +679,7 @@ theorem leadingCoeff_pow_X_add_C (r : R) (i : ℕ) : leadingCoeff ((X + C r) ^ i
 
 variable [NoZeroDivisors R] {p q : R[X]}
 
-@[simp]
+@[simp, push]
 lemma degree_mul : degree (p * q) = degree p + degree q :=
   letI := Classical.decEq R
   if hp0 : p = 0 then by simp only [hp0, degree_zero, zero_mul, WithBot.bot_add]
@@ -688,11 +694,11 @@ def degreeMonoidHom [Nontrivial R] : R[X] →* Multiplicative (WithBot ℕ) wher
   map_one' := degree_one
   map_mul' _ _ := degree_mul
 
-@[simp]
+@[simp, push]
 lemma degree_pow [Nontrivial R] (p : R[X]) (n : ℕ) : degree (p ^ n) = n • degree p :=
   map_pow (@degreeMonoidHom R _ _ _) _ _
 
-@[simp]
+@[simp, push]
 lemma leadingCoeff_mul (p q : R[X]) : leadingCoeff (p * q) = leadingCoeff p * leadingCoeff q := by
   by_cases hp : p = 0
   · simp only [hp, zero_mul, leadingCoeff_zero]
@@ -712,7 +718,7 @@ def leadingCoeffHom : R[X] →* R where
 lemma leadingCoeffHom_apply (p : R[X]) : leadingCoeffHom p = leadingCoeff p :=
   rfl
 
-@[simp]
+@[simp, push]
 lemma leadingCoeff_pow (p : R[X]) (n : ℕ) : leadingCoeff (p ^ n) = leadingCoeff p ^ n :=
   (leadingCoeffHom : R[X] →* R).map_pow p n
 

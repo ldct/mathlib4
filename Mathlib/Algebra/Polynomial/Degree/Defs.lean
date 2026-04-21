@@ -275,13 +275,13 @@ section Ring
 
 variable [Ring R]
 
-@[simp]
+@[simp, push]
 theorem degree_neg (p : R[X]) : degree (-p) = degree p := by unfold degree; rw [support_neg]
 
 theorem degree_neg_le_of_le {a : WithBot ℕ} {p : R[X]} (hp : degree p ≤ a) : degree (-p) ≤ a :=
   p.degree_neg.le.trans hp
 
-@[simp]
+@[simp, push]
 theorem natDegree_neg (p : R[X]) : natDegree (-p) = natDegree p := by simp [natDegree]
 
 theorem natDegree_neg_le_of_le {p : R[X]} (hp : natDegree p ≤ m) : natDegree (-p) ≤ m :=
@@ -293,7 +293,7 @@ theorem natDegree_intCast (n : ℤ) : natDegree (n : R[X]) = 0 := by
 
 theorem degree_intCast_le (n : ℤ) : degree (n : R[X]) ≤ 0 := degree_le_of_natDegree_le (by simp)
 
-@[simp]
+@[simp, push]
 theorem leadingCoeff_neg (p : R[X]) : (-p).leadingCoeff = -p.leadingCoeff := by
   rw [leadingCoeff, leadingCoeff, natDegree_neg, coeff_neg]
 

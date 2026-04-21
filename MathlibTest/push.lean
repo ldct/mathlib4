@@ -4,6 +4,8 @@ import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Insert
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.Polynomial.BigOperators
+import Mathlib.Algebra.Polynomial.Degree.Domain
 
 private axiom test_sorry : ∀ {α}, α
 
@@ -148,3 +150,65 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section degree
+
+open Polynomial
+
+-- degree_neg, natDegree_neg, leadingCoeff_neg
+example (p : ℤ[X]) : degree (-p) = degree p := by
+  push Polynomial.degree
+  rfl
+
+example (p : ℤ[X]) : natDegree (-p) = natDegree p := by
+  push Polynomial.natDegree
+  rfl
+
+example (p : ℤ[X]) : (-p).leadingCoeff = -p.leadingCoeff := by
+  push Polynomial.leadingCoeff
+  rfl
+
+-- degree_mul, natDegree_mul, leadingCoeff_mul (NoZeroDivisors / domain)
+example (p q : ℤ[X]) : degree (p * q) = degree p + degree q := by
+  push Polynomial.degree
+  rfl
+
+example (p q : ℤ[X]) (hp : p ≠ 0) (hq : q ≠ 0) :
+    natDegree (p * q) = natDegree p + natDegree q := by
+  push (disch := assumption) Polynomial.natDegree
+  rfl
+
+example (p q : ℤ[X]) : leadingCoeff (p * q) = leadingCoeff p * leadingCoeff q := by
+  push Polynomial.leadingCoeff
+  rfl
+
+-- degree_pow, natDegree_pow, leadingCoeff_pow
+example (p : ℤ[X]) (n : ℕ) : degree (p ^ n) = n • degree p := by
+  push Polynomial.degree
+  rfl
+
+example (p : ℤ[X]) (n : ℕ) : natDegree (p ^ n) = n * natDegree p := by
+  push Polynomial.natDegree
+  rfl
+
+example (p : ℤ[X]) (n : ℕ) : leadingCoeff (p ^ n) = leadingCoeff p ^ n := by
+  push Polynomial.leadingCoeff
+  rfl
+
+-- degree_prod, natDegree_prod, leadingCoeff_prod
+example (s : Finset ℕ) (f : ℕ → ℤ[X]) :
+    (∏ i ∈ s, f i).degree = ∑ i ∈ s, (f i).degree := by
+  push Polynomial.degree
+  rfl
+
+example (s : Finset ℕ) (f : ℕ → ℤ[X]) (hf : ∀ i ∈ s, f i ≠ 0) :
+    (∏ i ∈ s, f i).natDegree = ∑ i ∈ s, (f i).natDegree := by
+  push (disch := assumption) Polynomial.natDegree
+  rfl
+
+example (s : Finset ℕ) (f : ℕ → ℤ[X]) :
+    (∏ i ∈ s, f i).leadingCoeff = ∏ i ∈ s, (f i).leadingCoeff := by
+  push Polynomial.leadingCoeff
+  rfl
+
+end degree
