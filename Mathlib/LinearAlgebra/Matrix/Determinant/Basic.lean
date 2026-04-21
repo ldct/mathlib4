@@ -133,7 +133,7 @@ theorem det_mul_aux {M N : Matrix n n R} {p : n → n} (H : ¬Bijective p) :
       (fun σ _ _ => (not_congr mul_swap_eq_iff).mpr hij) (fun _ _ => mem_univ _) fun σ _ =>
       mul_swap_involutive i j σ
 
-@[simp]
+@[simp, push]
 theorem det_mul (M N : Matrix n n R) : det (M * N) = det M * det N :=
   calc
     det (M * N) = ∑ p : n → n, ∑ σ : Perm n, ε σ * ∏ i, M (σ i) (p i) * N (p i) i := by
@@ -306,7 +306,7 @@ theorem det_mul_column (v : n → R) (A : Matrix n n R) :
     det (of fun i j => v i * A i j) = (∏ i, v i) * det A :=
   MultilinearMap.map_smul_univ _ v A
 
-@[simp]
+@[simp, push]
 theorem det_pow (M : Matrix m m R) (n : ℕ) : det (M ^ n) = det M ^ n :=
   (detMonoidHom : Matrix m m R →* R).map_pow M n
 
