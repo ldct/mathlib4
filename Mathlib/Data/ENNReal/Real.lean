@@ -310,7 +310,7 @@ theorem ofReal_pow {p : ℝ} (hp : 0 ≤ p) (n : ℕ) :
 theorem ofReal_nsmul {x : ℝ} {n : ℕ} : ENNReal.ofReal (n • x) = n • ENNReal.ofReal x := by
   simp only [nsmul_eq_mul, ← ofReal_natCast n, ← ofReal_mul n.cast_nonneg]
 
-@[simp]
+@[simp, push]
 theorem toNNReal_mul {a b : ℝ≥0∞} : (a * b).toNNReal = a.toNNReal * b.toNNReal :=
   WithTop.untopD_zero_mul a b
 
@@ -325,7 +325,7 @@ noncomputable def toNNRealHom : ℝ≥0∞ →*₀ ℝ≥0 where
   map_mul' _ _ := toNNReal_mul
   map_zero' := toNNReal_zero
 
-@[simp]
+@[simp, push]
 theorem toNNReal_pow (a : ℝ≥0∞) (n : ℕ) : (a ^ n).toNNReal = a.toNNReal ^ n :=
   toNNRealHom.map_pow a n
 
@@ -333,13 +333,13 @@ theorem toNNReal_pow (a : ℝ≥0∞) (n : ℕ) : (a ^ n).toNNReal = a.toNNReal 
 noncomputable def toRealHom : ℝ≥0∞ →*₀ ℝ :=
   (NNReal.toRealHom : ℝ≥0 →*₀ ℝ).comp toNNRealHom
 
-@[simp]
+@[simp, push]
 theorem toReal_mul : (a * b).toReal = a.toReal * b.toReal :=
   toRealHom.map_mul a b
 
 theorem toReal_nsmul (a : ℝ≥0∞) (n : ℕ) : (n • a).toReal = n • a.toReal := by simp
 
-@[simp]
+@[simp, push]
 theorem toReal_pow (a : ℝ≥0∞) (n : ℕ) : (a ^ n).toReal = a.toReal ^ n :=
   toRealHom.map_pow a n
 
