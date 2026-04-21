@@ -148,3 +148,24 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section exp
+
+example (a b : ℝ) : Real.exp (a + b) = Real.exp a * Real.exp b := by
+  push Real.exp
+  rfl
+
+example (a : ℝ) : Real.exp (-a) = (Real.exp a)⁻¹ := by
+  push Real.exp
+  rfl
+
+example (a b : ℝ) : Real.exp (a - b) = Real.exp a / Real.exp b := by
+  push Real.exp
+  rfl
+
+example (s : Finset ℕ) (f : ℕ → ℝ) :
+    Real.exp (∑ i ∈ s, f i) = ∏ i ∈ s, Real.exp (f i) := by
+  push Real.exp
+  rfl
+
+end exp
