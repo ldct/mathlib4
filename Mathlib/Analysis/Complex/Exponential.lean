@@ -104,6 +104,7 @@ theorem exp_zero : exp 0 = 1 := by
       simp only [sum_range_succ, pow_succ]
       simp
 
+@[push]
 theorem exp_add : exp (x + y) = exp x * exp y := by
   have hj : ∀ j : ℕ, (∑ m ∈ range j, (x + y) ^ m / m.factorial) =
         ∑ i ∈ range j, ∑ k ∈ range (i + 1), x ^ k / k.factorial *
@@ -138,6 +139,7 @@ theorem exp_list_sum (l : List ℂ) : exp l.sum = (l.map exp).prod :=
 theorem exp_multiset_sum (s : Multiset ℂ) : exp s.sum = (s.map exp).prod :=
   @MonoidHom.map_multiset_prod (Multiplicative ℂ) ℂ _ _ expMonoidHom s
 
+@[push]
 theorem exp_sum {α : Type*} (s : Finset α) (f : α → ℂ) :
     exp (∑ x ∈ s, f x) = ∏ x ∈ s, exp (f x) :=
   map_prod (M := Multiplicative ℂ) expMonoidHom f s
@@ -158,9 +160,11 @@ theorem exp_nat_mul (x : ℂ) : ∀ n : ℕ, exp (n * x) = exp x ^ n
 theorem exp_ne_zero : exp x ≠ 0 := fun h =>
   zero_ne_one (α := ℂ) <| by rw [← exp_zero, ← add_neg_cancel x, exp_add, h]; simp
 
+@[push]
 theorem exp_neg : exp (-x) = (exp x)⁻¹ := by
   rw [← mul_right_inj' (exp_ne_zero x), ← exp_add]; simp
 
+@[push]
 theorem exp_sub : exp (x - y) = exp x / exp y := by
   simp [sub_eq_add_neg, exp_add, exp_neg, div_eq_mul_inv]
 
@@ -204,6 +208,7 @@ variable (x y : ℝ)
 @[simp]
 theorem exp_zero : exp 0 = 1 := by simp [Real.exp]
 
+@[push]
 nonrec theorem exp_add : exp (x + y) = exp x * exp y := by simp [exp_add, exp]
 
 /-- the exponential function as a monoid hom from `Multiplicative ℝ` to `ℝ` -/
@@ -219,6 +224,7 @@ theorem exp_list_sum (l : List ℝ) : exp l.sum = (l.map exp).prod :=
 theorem exp_multiset_sum (s : Multiset ℝ) : exp s.sum = (s.map exp).prod :=
   @MonoidHom.map_multiset_prod (Multiplicative ℝ) ℝ _ _ expMonoidHom s
 
+@[push]
 theorem exp_sum {α : Type*} (s : Finset α) (f : α → ℝ) :
     exp (∑ x ∈ s, f x) = ∏ x ∈ s, exp (f x) :=
   map_prod (M := Multiplicative ℝ) expMonoidHom f s
@@ -233,9 +239,11 @@ nonrec theorem exp_nat_mul (x : ℝ) (n : ℕ) : exp (n * x) = exp x ^ n :=
 nonrec theorem exp_ne_zero : exp x ≠ 0 := fun h =>
   exp_ne_zero x <| by rw [exp, ← ofReal_inj] at h; simp_all
 
+@[push]
 nonrec theorem exp_neg : exp (-x) = (exp x)⁻¹ :=
   ofReal_injective <| by simp [exp_neg]
 
+@[push]
 theorem exp_sub : exp (x - y) = exp x / exp y := by
   simp [sub_eq_add_neg, exp_add, exp_neg, div_eq_mul_inv]
 

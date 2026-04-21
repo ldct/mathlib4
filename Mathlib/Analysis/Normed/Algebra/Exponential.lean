@@ -638,6 +638,7 @@ theorem expSeries_div_summable (x : 𝔸) : Summable fun n => x ^ n / n ! :=
 theorem expSeries_div_hasSum_exp (x : 𝔸) : HasSum (fun n => x ^ n / n !) (exp x) :=
   expSeries_div_hasSum_exp_of_mem_ball ℚ x ((expSeries_radius_eq_top ℚ 𝔸).symm ▸ edist_lt_top _ _)
 
+@[push]
 theorem exp_neg (x : 𝔸) : exp (-x) = (exp x)⁻¹ :=
   exp_neg_of_mem_ball ℚ <| (expSeries_radius_eq_top ℚ 𝔸).symm ▸ edist_lt_top _ _
 
@@ -660,11 +661,13 @@ variable {𝕂 𝔸 : Type*} [NormedCommRing 𝔸] [NormedAlgebra ℚ 𝔸] [Com
 
 /-- In a commutative Banach-algebra `𝔸` over `𝕂 = ℝ` or `𝕂 = ℂ`,
 `NormedSpace.exp (x+y) = (NormedSpace.exp x) * (NormedSpace.exp y)`. -/
+@[push]
 theorem exp_add {x y : 𝔸} : exp (x + y) = exp x * exp y :=
   exp_add_of_mem_ball ((expSeries_radius_eq_top ℚ 𝔸).symm ▸ edist_lt_top _ _)
     ((expSeries_radius_eq_top ℚ 𝔸).symm ▸ edist_lt_top _ _)
 
 /-- A version of `NormedSpace.exp_sum_of_commute` for a commutative Banach-algebra. -/
+@[push]
 theorem exp_sum {ι} (s : Finset ι) (f : ι → 𝔸) : exp (∑ i ∈ s, f i) = ∏ i ∈ s, exp (f i) := by
   rw [exp_sum_of_commute, Finset.noncommProd_eq_prod]
   exact fun i _hi j _hj _ => Commute.all _ _
