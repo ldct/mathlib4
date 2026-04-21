@@ -34,6 +34,7 @@ section Semiring
 
 variable [Semiring R] [NoZeroDivisors R] {p q : R[X]}
 
+@[push]
 lemma natDegree_mul (hp : p ≠ 0) (hq : q ≠ 0) : (p * q).natDegree = p.natDegree + q.natDegree := by
   rw [← Nat.cast_inj (R := WithBot ℕ), ← degree_eq_natDegree (mul_ne_zero hp hq),
     Nat.cast_add, ← degree_eq_natDegree hp, ← degree_eq_natDegree hq, degree_mul]
@@ -50,7 +51,7 @@ lemma natDegree_smul {S : Type*} [Semiring S] [IsDomain S] [Module S R] [Module.
       apply smul_ne_zero ha
       simp [hp]
 
-@[simp]
+@[simp, push]
 lemma natDegree_pow (p : R[X]) (n : ℕ) : natDegree (p ^ n) = n * natDegree p := by
   classical
   obtain rfl | hp := eq_or_ne p 0
