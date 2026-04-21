@@ -348,7 +348,7 @@ lemma sqrt_two_lt_three_halves : √2 < 3 / 2 := by
 lemma inv_sqrt_two_sub_one : (√2 - 1)⁻¹ = √2 + 1 := by
   grind
 
-@[simp]
+@[simp, push]
 theorem sqrt_mul {x : ℝ} (hx : 0 ≤ x) (y : ℝ) : √(x * y) = √x * √y := by
   simp_rw [Real.sqrt, ← NNReal.coe_mul, NNReal.coe_inj, Real.toNNReal_mul hx, NNReal.sqrt_mul]
 
@@ -356,11 +356,11 @@ theorem sqrt_mul {x : ℝ} (hx : 0 ≤ x) (y : ℝ) : √(x * y) = √x * √y :
 theorem sqrt_mul' (x) {y : ℝ} (hy : 0 ≤ y) : √(x * y) = √x * √y := by
   rw [mul_comm, sqrt_mul hy, mul_comm]
 
-@[simp]
+@[simp, push]
 theorem sqrt_inv (x : ℝ) : √x⁻¹ = (√x)⁻¹ := by
   rw [Real.sqrt, Real.toNNReal_inv, NNReal.sqrt_inv, NNReal.coe_inv, Real.sqrt]
 
-@[simp]
+@[simp, push]
 theorem sqrt_div {x : ℝ} (hx : 0 ≤ x) (y : ℝ) : √(x / y) = √x / √y := by
   rw [division_def, sqrt_mul hx, sqrt_inv, division_def]
 

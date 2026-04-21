@@ -148,3 +148,22 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section sqrt
+
+example (a b : ℝ) (ha : 0 ≤ a) (_hb : 0 ≤ b) :
+    Real.sqrt (a * b) = Real.sqrt a * Real.sqrt b := by
+  push (disch := positivity) Real.sqrt
+  rfl
+
+example (a : ℝ) :
+    Real.sqrt a⁻¹ = (Real.sqrt a)⁻¹ := by
+  push (disch := positivity) Real.sqrt
+  rfl
+
+example (a b : ℝ) (ha : 0 ≤ a) :
+    Real.sqrt (a / b) = Real.sqrt a / Real.sqrt b := by
+  push (disch := positivity) Real.sqrt
+  rfl
+
+end sqrt
