@@ -66,7 +66,7 @@ theorem norm_div_rev (a b : E) : ‖a / b‖ = ‖b / a‖ := by
   rw [← dist_one, dist_eq_norm_inv_mul, dist_eq_norm_inv_mul']
   simp
 
-@[to_additive (attr := simp) norm_neg]
+@[to_additive (attr := simp, push) norm_neg, push]
 theorem norm_inv' (a : E) : ‖a⁻¹‖ = ‖a‖ := by simpa using norm_div_rev 1 a
 
 @[to_additive (attr := simp) norm_abs_zsmul]
@@ -413,7 +413,7 @@ theorem enorm'_le_iff_norm_le {x : E} {y : F} : ‖x‖ₑ ≤ ‖y‖ₑ ↔ �
 theorem nndist_eq_nnnorm_inv_mul (a b : E) : nndist a b = ‖a⁻¹ * b‖₊ :=
   NNReal.eq <| dist_eq_norm_inv_mul _ _
 
-@[to_additive (attr := simp) nnnorm_neg]
+@[to_additive (attr := simp, push) nnnorm_neg, push]
 theorem nnnorm_inv' (a : E) : ‖a⁻¹‖₊ = ‖a‖₊ :=
   NNReal.eq <| norm_inv' a
 

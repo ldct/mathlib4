@@ -62,30 +62,30 @@ variable [NormedDivisionRing α] {a b : α}
 instance (priority := 900) NormedDivisionRing.to_normOneClass : NormOneClass α :=
   ⟨mul_left_cancel₀ (mt norm_eq_zero.1 (one_ne_zero' α)) <| by rw [← norm_mul, mul_one, mul_one]⟩
 
-@[simp]
+@[simp, push]
 theorem norm_div (a b : α) : ‖a / b‖ = ‖a‖ / ‖b‖ :=
   map_div₀ (normHom : α →*₀ ℝ) a b
 
-@[simp]
+@[simp, push]
 theorem nnnorm_div (a b : α) : ‖a / b‖₊ = ‖a‖₊ / ‖b‖₊ :=
   map_div₀ (nnnormHom : α →*₀ ℝ≥0) a b
 
-@[simp]
+@[simp, push]
 theorem norm_inv (a : α) : ‖a⁻¹‖ = ‖a‖⁻¹ :=
   map_inv₀ (normHom : α →*₀ ℝ) a
 
-@[simp]
+@[simp, push]
 theorem nnnorm_inv (a : α) : ‖a⁻¹‖₊ = ‖a‖₊⁻¹ :=
   NNReal.eq <| by simp
 
 @[simp]
 lemma enorm_inv {a : α} (ha : a ≠ 0) : ‖a⁻¹‖ₑ = ‖a‖ₑ⁻¹ := by simp [enorm, ENNReal.coe_inv, ha]
 
-@[simp]
+@[simp, push]
 theorem norm_zpow : ∀ (a : α) (n : ℤ), ‖a ^ n‖ = ‖a‖ ^ n :=
   map_zpow₀ (normHom : α →*₀ ℝ)
 
-@[simp]
+@[simp, push]
 theorem nnnorm_zpow : ∀ (a : α) (n : ℤ), ‖a ^ n‖₊ = ‖a‖₊ ^ n :=
   map_zpow₀ (nnnormHom : α →*₀ ℝ≥0)
 

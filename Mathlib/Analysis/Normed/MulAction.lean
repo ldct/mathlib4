@@ -95,6 +95,7 @@ section NormSMulClass
 class NormSMulClass (α β : Type*) [Norm α] [Norm β] [SMul α β] : Prop where
   protected norm_smul (r : α) (x : β) : ‖r • x‖ = ‖r‖ * ‖x‖
 
+@[push]
 lemma norm_smul [Norm α] [Norm β] [SMul α β] [NormSMulClass α β] (r : α) (x : β) :
     ‖r • x‖ = ‖r‖ * ‖x‖ :=
   NormSMulClass.norm_smul r x
@@ -124,6 +125,7 @@ theorem NormSMulClass.of_nnnorm_smul (h : ∀ (r : α) (x : β), ‖r • x‖�
 
 variable [NormSMulClass α β]
 
+@[push]
 theorem nnnorm_smul (r : α) (x : β) : ‖r • x‖₊ = ‖r‖₊ * ‖x‖₊ :=
   NNReal.eq <| norm_smul r x
 
