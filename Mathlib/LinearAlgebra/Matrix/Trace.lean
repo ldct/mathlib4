@@ -60,11 +60,11 @@ variable {n R}
 @[simp]
 lemma trace_eq_zero_of_isEmpty [IsEmpty n] (A : Matrix n n R) : trace A = 0 := by simp [trace]
 
-@[simp]
+@[simp, push]
 theorem trace_add (A B : Matrix n n R) : trace (A + B) = trace A + trace B :=
   Finset.sum_add_distrib
 
-@[simp]
+@[simp, push]
 theorem trace_smul [DistribSMul α R] (r : α) (A : Matrix n n R) :
     trace (r • A) = r • trace A :=
   Finset.smul_sum.symm
@@ -103,7 +103,7 @@ theorem trace_list_sum (l : List (Matrix n n R)) : trace l.sum = (l.map trace).s
 theorem trace_multiset_sum (s : Multiset (Matrix n n R)) : trace s.sum = (s.map trace).sum :=
   map_multiset_sum (traceAddMonoidHom n R) s
 
-@[simp]
+@[simp, push]
 theorem trace_sum (s : Finset ι) (f : ι → Matrix n n R) :
     trace (∑ i ∈ s, f i) = ∑ i ∈ s, trace (f i) :=
   map_sum (traceAddMonoidHom n R) f s
@@ -128,11 +128,11 @@ section AddCommGroup
 
 variable [AddCommGroup R]
 
-@[simp]
+@[simp, push]
 theorem trace_sub (A B : Matrix n n R) : trace (A - B) = trace A - trace B :=
   Finset.sum_sub_distrib ..
 
-@[simp]
+@[simp, push]
 theorem trace_neg (A : Matrix n n R) : trace (-A) = -trace A :=
   Finset.sum_neg_distrib ..
 
