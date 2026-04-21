@@ -296,7 +296,7 @@ theorem eval_monomial {n a} : (monomial n a).eval x = a * x ^ n :=
 theorem eval_zero : (0 : R[X]).eval x = 0 :=
   eval₂_zero _ _
 
-@[simp]
+@[simp, push]
 theorem eval_add : (p + q).eval x = p.eval x + q.eval x :=
   eval₂_add _ _
 
@@ -331,6 +331,7 @@ theorem eval_listSum (l : List R[X]) (x : R) : eval x l.sum = (l.map (eval x)).s
 theorem eval_multisetSum (s : Multiset R[X]) (x : R) : eval x s.sum = (s.map (eval x)).sum :=
   eval₂_multiset_sum ..
 
+@[push]
 theorem eval_sum (p : R[X]) (f : ℕ → R → R[X]) (x : R) :
     (p.sum f).eval x = p.sum fun n a => (f n a).eval x :=
   eval₂_sum _ _ _ _
@@ -596,7 +597,7 @@ section
 
 variable [CommSemiring R] {p q : R[X]} {x : R} [CommSemiring S] (f : R →+* S)
 
-@[simp]
+@[simp, push]
 theorem eval_mul : (p * q).eval x = p.eval x * q.eval x :=
   eval₂_mul _ _
 
@@ -608,7 +609,7 @@ def evalRingHom : R → R[X] →+* R :=
 theorem coe_evalRingHom (r : R) : (evalRingHom r : R[X] → R) = eval r :=
   rfl
 
-@[simp]
+@[simp, push]
 theorem eval_pow (n : ℕ) : (p ^ n).eval x = p.eval x ^ n :=
   eval₂_pow _ _ _
 
@@ -658,6 +659,7 @@ theorem eval_multiset_prod (s : Multiset R[X]) (x : R) : eval x s.prod = (s.map 
 
 /-- Polynomial evaluation commutes with `Finset.prod`
 -/
+@[push]
 theorem eval_prod {ι : Type*} (s : Finset ι) (p : ι → R[X]) (x : R) :
     eval x (∏ j ∈ s, p j) = ∏ j ∈ s, eval x (p j) :=
   map_prod (evalRingHom x) _ _
@@ -744,11 +746,11 @@ theorem eval₂_sub {S} [Ring S] (f : R →+* S) {x : S} :
     (p - q).eval₂ f x = p.eval₂ f x - q.eval₂ f x := by
   rw [sub_eq_add_neg, eval₂_add, eval₂_neg, sub_eq_add_neg]
 
-@[simp]
+@[simp, push]
 theorem eval_neg (p : R[X]) (x : R) : (-p).eval x = -p.eval x :=
   eval₂_neg _
 
-@[simp]
+@[simp, push]
 theorem eval_sub (p q : R[X]) (x : R) : (p - q).eval x = p.eval x - q.eval x :=
   eval₂_sub _
 
