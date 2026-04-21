@@ -329,32 +329,32 @@ theorem fract_add (a b : R) : ∃ z : ℤ, fract (a + b) - fract a - fract b = z
 
 variable [IsOrderedRing R]
 
-@[simp]
+@[simp, push]
 theorem fract_add_intCast (a : R) (m : ℤ) : fract (a + m) = fract a := by
   rw [fract]
   simp
-@[simp]
+@[simp, push]
 theorem fract_add_natCast (a : R) (m : ℕ) : fract (a + m) = fract a := by
   rw [fract]
   simp
-@[simp]
+@[simp, push]
 theorem fract_add_one (a : R) : fract (a + 1) = fract a := mod_cast fract_add_natCast a 1
 
-@[simp]
+@[simp, push]
 theorem fract_add_ofNat (a : R) (n : ℕ) [n.AtLeastTwo] :
     fract (a + ofNat(n)) = fract a :=
   fract_add_natCast a n
 
-@[simp]
+@[simp, push]
 theorem fract_intCast_add (m : ℤ) (a : R) : fract (↑m + a) = fract a := by
   rw [add_comm, fract_add_intCast]
-@[simp]
+@[simp, push]
 theorem fract_natCast_add (n : ℕ) (a : R) : fract (↑n + a) = fract a := by
   rw [add_comm, fract_add_natCast]
-@[simp]
+@[simp, push]
 theorem fract_one_add (a : R) : fract (1 + a) = fract a := mod_cast fract_natCast_add 1 a
 
-@[simp]
+@[simp, push]
 theorem fract_ofNat_add (n : ℕ) [n.AtLeastTwo] (a : R) :
     fract (ofNat(n) + a) = fract a :=
   fract_natCast_add n a
@@ -463,6 +463,7 @@ theorem fract_eq_zero_iff {a : R} : fract a = 0 ↔ a ∈ range Int.cast := by
 theorem fract_ne_zero_iff {a : R} : fract a ≠ 0 ↔ a ∉ range Int.cast :=
   fract_eq_zero_iff.not
 
+@[push]
 theorem fract_neg {x : R} (hx : fract x ≠ 0) : fract (-x) = 1 - fract x := by
   rw [fract_eq_iff]
   constructor
@@ -620,6 +621,7 @@ variable [IsOrderedRing R]
 theorem floor_neg : ⌊-a⌋ = -⌈a⌉ :=
   eq_of_forall_le_iff fun z => by rw [le_neg, ceil_le, le_floor, Int.cast_neg, le_neg]
 
+@[push]
 theorem ceil_neg : ⌈-a⌉ = -⌊a⌋ :=
   eq_of_forall_ge_iff fun z => by rw [neg_le, ceil_le, le_floor, Int.cast_neg, neg_le]
 
@@ -634,36 +636,36 @@ theorem ceil_natCast (n : ℕ) : ⌈(n : R)⌉ = n :=
 @[simp]
 theorem ceil_ofNat (n : ℕ) [n.AtLeastTwo] : ⌈(ofNat(n) : R)⌉ = ofNat(n) := ceil_natCast n
 
-@[simp]
+@[simp, push]
 theorem ceil_add_intCast (a : R) (z : ℤ) : ⌈a + z⌉ = ⌈a⌉ + z := by
   rw [← neg_inj, neg_add', ← floor_neg, ← floor_neg, neg_add', floor_sub_intCast]
 
-@[simp]
+@[simp, push]
 theorem ceil_intCast_add (z : ℤ) (a : R) : ⌈z + a⌉ = z + ⌈a⌉ := by
   rw [add_comm, ceil_add_intCast, add_comm]
 
-@[simp]
+@[simp, push]
 theorem ceil_add_natCast (a : R) (n : ℕ) : ⌈a + n⌉ = ⌈a⌉ + n := by
   rw [← Int.cast_natCast, ceil_add_intCast]
 
-@[simp]
+@[simp, push]
 theorem ceil_natCast_add (n : ℕ) (a : R) : ⌈n + a⌉ = n + ⌈a⌉ :=
   mod_cast ceil_intCast_add n a
 
-@[simp]
+@[simp, push]
 theorem ceil_add_one (a : R) : ⌈a + 1⌉ = ⌈a⌉ + 1 := by
   rw [← ceil_add_intCast a (1 : ℤ), cast_one]
 
-@[simp]
+@[simp, push]
 theorem ceil_one_add (a : R) : ⌈1 + a⌉ = 1 + ⌈a⌉ :=
   mod_cast ceil_natCast_add 1 a
 
-@[simp]
+@[simp, push]
 theorem ceil_add_ofNat (a : R) (n : ℕ) [n.AtLeastTwo] :
     ⌈a + ofNat(n)⌉ = ⌈a⌉ + ofNat(n) :=
   ceil_add_natCast a n
 
-@[simp]
+@[simp, push]
 theorem ceil_ofNat_add (n : ℕ) [n.AtLeastTwo] (a : R) :
     ⌈ofNat(n) + a⌉ = ofNat(n) + ⌈a⌉ :=
   ceil_natCast_add n a
