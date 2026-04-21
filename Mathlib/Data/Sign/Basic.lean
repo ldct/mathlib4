@@ -97,7 +97,7 @@ section LinearOrderedRing
 
 variable [Ring α] [LinearOrder α] [IsStrictOrderedRing α]
 
-theorem sign_mul (x y : α) : sign (x * y) = sign x * sign y := by
+@[push] theorem sign_mul (x y : α) : sign (x * y) = sign x * sign y := by
   rcases lt_trichotomy x 0 with (hx | hx | hx) <;> rcases lt_trichotomy y 0 with (hy | hy | hy) <;>
     simp [hx, hy, mul_pos_of_neg_of_neg, mul_neg_of_neg_of_pos, mul_neg_of_pos_of_neg]
 
@@ -127,7 +127,7 @@ def signHom : α →*₀ SignType where
   map_one' := sign_one
   map_mul' := sign_mul
 
-theorem sign_pow (x : α) (n : ℕ) : sign (x ^ n) = sign x ^ n := map_pow signHom x n
+@[push] theorem sign_pow (x : α) (n : ℕ) : sign (x ^ n) = sign x ^ n := map_pow signHom x n
 
 end LinearOrderedRing
 
