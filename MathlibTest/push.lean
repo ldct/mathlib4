@@ -4,6 +4,8 @@ import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Insert
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.Star.BigOperators
+import Mathlib.Data.Complex.Basic
 
 private axiom test_sorry : ∀ {α}, α
 
@@ -148,3 +150,29 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section star
+
+variable (x y : ℂ) (n : ℕ) (s : Finset ℕ) (f : ℕ → ℂ)
+
+example : star (x - y) = star x - star y := by
+  push star
+  rfl
+
+example : star (-x) = -star x := by
+  push star
+  rfl
+
+example : star (x ^ n) = star x ^ n := by
+  push star
+  rfl
+
+example : star (∑ i ∈ s, f i) = ∑ i ∈ s, star (f i) := by
+  push star
+  rfl
+
+example : star (∏ i ∈ s, f i) = ∏ i ∈ s, star (f i) := by
+  push star
+  rfl
+
+end star
