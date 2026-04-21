@@ -4,6 +4,7 @@ import Mathlib.Data.Nat.Cast.Basic
 import Mathlib.Data.Set.Basic
 import Mathlib.Data.Set.Insert
 import Mathlib.Analysis.SpecialFunctions.Pow.Real
+import Mathlib.Algebra.Polynomial.Eval.Defs
 
 private axiom test_sorry : ∀ {α}, α
 
@@ -148,3 +149,36 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section eval
+
+open Polynomial
+
+variable (p q : ℝ[X]) (x : ℝ) (n : ℕ)
+
+example : (p + q).eval x = p.eval x + q.eval x := by
+  push Polynomial.eval
+  rfl
+
+example : (p * q).eval x = p.eval x * q.eval x := by
+  push Polynomial.eval
+  rfl
+
+example : (-p).eval x = -p.eval x := by
+  push Polynomial.eval
+  rfl
+
+example : (p - q).eval x = p.eval x - q.eval x := by
+  push Polynomial.eval
+  rfl
+
+example : (p ^ n).eval x = p.eval x ^ n := by
+  push Polynomial.eval
+  rfl
+
+example (ι : Type*) (s : Finset ι) (f : ι → ℝ[X]) :
+    (∏ j ∈ s, f j).eval x = ∏ j ∈ s, (f j).eval x := by
+  push Polynomial.eval
+  rfl
+
+end eval
