@@ -148,3 +148,43 @@ example (a b c : α) (s : Set α) : a ∈ (∅ ∪ (Set.univ ∩ (({b, c} \ sᶜ
   exact test_sorry
 
 end membership
+
+section ceil
+
+example (a : ℚ) (n : ℕ) : ⌈a + n⌉ = ⌈a⌉ + n := by
+  push Int.ceil
+  rfl
+
+example (a : ℚ) : ⌈a + 3⌉ = ⌈a⌉ + 3 := by
+  push Int.ceil
+  rfl
+
+example (a : ℚ) : ⌈a + 2⌉ = ⌈a⌉ + 2 := by
+  push Int.ceil
+  rfl
+
+example (a : ℚ) : ⌈a + 1⌉ = ⌈a⌉ + 1 := by
+  push Int.ceil
+  rfl
+
+example (a : ℚ) (n : ℤ) : ⌈a + n⌉ = ⌈a⌉ + n := by
+  push Int.ceil
+  rfl
+
+example (a : ℚ) (n : ℕ) : Int.fract (a + n) = Int.fract a := by
+  push Int.fract
+  rfl
+
+example (a : ℚ) : Int.fract (a + 3) = Int.fract a := by
+  push Int.fract
+  rfl
+
+example (a : ℚ) : Int.fract (a + 1) = Int.fract a := by
+  push Int.fract
+  rfl
+
+example (a : ℚ) (n : ℤ) : Int.fract (a + n) = Int.fract a := by
+  push Int.fract
+  rfl
+
+end ceil
