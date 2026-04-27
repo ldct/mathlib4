@@ -127,7 +127,7 @@ theorem deriv_fun_inv'' (hc : DifferentiableAt 𝕜 c x) (hx : c x ≠ 0) :
     deriv (fun x => (c x)⁻¹) x = -deriv c x / c x ^ 2 :=
   (hc.hasDerivAt.inv hx).deriv
 
-@[simp]
+@[simp, push]
 theorem deriv_inv'' (hc : DifferentiableAt 𝕜 c x) (hx : c x ≠ 0) :
     deriv (c⁻¹) x = -deriv c x / c x ^ 2 :=
   (hc.hasDerivAt.inv hx).deriv
@@ -230,7 +230,7 @@ theorem deriv_fun_div (hc : DifferentiableAt 𝕜 c x) (hd : DifferentiableAt �
     deriv (fun x => c x / d x) x = (deriv c x * d x - c x * deriv d x) / d x ^ 2 :=
   (hc.hasDerivAt.div hd.hasDerivAt hx).deriv
 
-@[simp]
+@[simp, push]
 theorem deriv_div (hc : DifferentiableAt 𝕜 c x) (hd : DifferentiableAt 𝕜 d x) (hx : d x ≠ 0) :
     deriv (c / d) x = (deriv c x * d x - c x * deriv d x) / d x ^ 2 :=
   (hc.hasDerivAt.div hd.hasDerivAt hx).deriv

@@ -292,7 +292,7 @@ theorem deriv_fun_mul (hc : DifferentiableAt 𝕜 c x) (hd : DifferentiableAt �
     deriv (fun y => c y * d y) x = deriv c x * d x + c x * deriv d x :=
   (hc.hasDerivAt.mul hd.hasDerivAt).deriv
 
-@[simp]
+@[simp, push]
 theorem deriv_mul (hc : DifferentiableAt 𝕜 c x) (hd : DifferentiableAt 𝕜 d x) :
     deriv (c * d) x = deriv c x * d x + c x * deriv d x :=
   (hc.hasDerivAt.mul hd.hasDerivAt).deriv
